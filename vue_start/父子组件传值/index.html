@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
+  <title>father to son</title>
+</head>
+<body>
+  <!--
+    原理：data-* 自定义数据属性
+
+    data-props.xxx 
+
+    props:['xxx'] 实际上构造了一个 data-xxx 属性 (子组件) ， 并且自定义的属性值存储在 props里面
+
+    父组件通过给子组件的 xxx 属性传值 
+    
+
+  -->
+  <div id="app">
+    <!--
+      ref 机制访问 子组件
+    -->
+   <cpn-son :text="message" ref="son"></cpn-son>
+  </div>
+  <script>
+ 
+    const vm = new Vue({
+      el:"#app",
+      data:{
+        message:'hello,Son!'
+      },
+      components:{
+        "cpn-son":{
+          template:`<div>
+                      <p>你爸对你说<span>{{text}}</span></p>
+                    </div>`,
+          data(){
+            return {
+              xxx:this.text //cpnSon._data.xxx --> 'hello,Vue!' ==>说明props的数据 son 是直接获取到，并可以自由访问到
+            }
+          },
+          props:["text"]
+        }
+      },
+
+    })
+
+    const cpnSon = vm.$refs.son
+
+  </script>
+</body>
+</html>
