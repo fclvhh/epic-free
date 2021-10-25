@@ -23,7 +23,8 @@
     <!--
       ref 机制访问 子组件
     -->
-   <cpn-son :text="message" ref="son"></cpn-son>
+   <cpn-son :text="message" ref="son" ></cpn-son>
+   <button @click="fun">click-btn</button>
   </div>
   <script>
  
@@ -41,10 +42,15 @@
             return {
               xxx:this.text //cpnSon._data.xxx --> 'hello,Vue!' ==>说明props的数据 son 是直接获取到，并可以自由访问到
             }
-          },
+          }, 
           props:["text"]
         }
       },
+      methods:{
+        fun(e){
+          console.log(e);
+        }
+      }
 
     })
 
