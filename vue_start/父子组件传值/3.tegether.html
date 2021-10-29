@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
+  <title>父组件访问子组件的api方式</title>
+</head>
+<body>
+  <div id="app">
+    <button @click="handle">father-click</button>
+    <hr>
+   <cpn></cpn>
+   <cpn></cpn>
+   <hr>
+   <p>直接获取第三个子组件</p>
+   <cpn ref="three"></cpn>
+  </div>
+  <script>
+    var cpn = {
+      template:`
+      <div>
+        <p>我是son,{{signature}}</p>
+        <button @click="handle2">child-click</button>
+      </div>
+      `,
+      data() {
+        return {
+          signature:'JustinBieber'
+        }
+      },
+      methods:{
+        handle2() {
+          console.log(this.$parent);
+          console.log(this.$parent.mark);
+        }
+      }
+    }
+    const vm = new Vue({
+      el:'#app',
+      data:{
+        mark:'knock!'
+      },
+      methods:{
+        handle() {
+          console.log(this.$children);
+          console.log(this.$children[0].signature);
+          console.log(this.$refs.three.signature);
+        }
+      },
+      components:{
+        'cpn':cpn
+      }
+
+    })
+  </script>
+</body>
+</html>

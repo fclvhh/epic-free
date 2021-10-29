@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>son to father</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
+</head>
+<body>
+  <!-- 
+    通过事件机制把消息返回给父组件
+    1.在父组件上绑定事件
+    2.子组件负责触发事件 (类比，dom中，通常都是用户触发事件，这里变成了子组件)
+
+    原理：1.子组件作为父组件的用户，触发事件
+        2.自定义事件
+
+      触发事件的 api    $emit()
+
+      3. 多个参数，用arguments , 单个参数，调函数，不用括号
+
+      只要爸爸能看见就ok
+   -->
+  <div id="app">
+    <childcpn @increment="handle1(arguments)" @decrement="handle2(arguments)"></childcpn>
+    <p>{{this.total}}</p>
+  </div>
+  <script>
+    let childCpn = {
+      template:`
+      <div>
+        <button @click="increment">+1</button>
+        <button @click="decrement">-1</button>
+      </div>
+      `,
+      methods:{
+        increment(){
+          this.counter++
+          this.$emit('increment',this.counter,2,2,2)
+         
+        },
+        decrement(){
+          this.counter--
+          this.$emit('decrement',this.counter,2,22,222)
+        }
+      },
+      data(){
+        return {
+          counter:0
+        }
+      }
+
+    }
+    const vm = new Vue({
+      el:'#app',
+      data:{
+        total:0
+      },
+      methods:{
+        handle1(arguments) {
+          this.total = arguments[0]
+          console.log('+1');
+          console.log(arguments);
+         
+        },
+        handle2(arguments) {
+          this.total = arguments[0]
+          console.log('-1');
+        }
+      },
+      components:{
+        'childcpn':childCpn
+      }
+
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
+  <title>demo</title>
+</head>
+<body>
+  <!-- input 原理demo -->
+  <div id="app">
+    <p>原生</p>
+    <input type="text" @input="handleChange" :value="this.value"></input>
+    <hr>
+    <p>v-model 语法糖</p>
+    <input type="text" v-model="value">
+    <hr>
+    <p>利用watch 来弥补 v-model 缺点：无法对数据监控</p>
+    <input type="text" v-model="value">
+  </div>
+  <script>
+    const vm = new Vue({
+      el:'#app',
+      data:{
+        value:''
+      },
+      methods:{
+        handleChange(e) {
+          console.log(e.target.value);
+          this.value = e.target.value
+        }
+      },
+      watch:{
+        value:function(val,oldVal){
+          // console.log(`${val}----${oldVal}`);
+          console.log('小伙子，你以为我不知道吗？---我全都知道！; ---对不起！---破了个案!');
+        }
+      }
+    })
+  </script>
+</body>
+</html>
